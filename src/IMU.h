@@ -47,11 +47,6 @@ public:
   virtual int readMagneticField(float& x, float& y, float& z); // Results are in uT (micro Tesla).
   virtual int magneticFieldAvailable(); // Number of samples in the FIFO.
   virtual float magneticFieldSampleRate(); // Sampling rate of the sensor.
-  // Returns the expected field strength. Filter algorithms can use this value
-  // to detect and ignore when a strong magnetic field or nearby ferrous metal
-  // objects interfere with the magnetometer readings.
-  // Defaults to 50.0 uT for sensors that lacks this calibration info.
-  virtual float expectedMagneticFieldStrength() { return 50.0f; }
 
   // Euler angles
   int readEulerAngles(float& x, float& y, float& z); // Results are in degrees

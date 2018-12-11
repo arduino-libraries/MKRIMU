@@ -25,7 +25,6 @@ gyroscopeSampleRate	KEYWORD2
 readMagneticField	KEYWORD2
 magneticFieldAvailable	KEYWORD2
 magneticFieldSampleRate	KEYWORD2
-expectedMagneticFieldStrength	KEYWORD2
 
 readEulerAngles	KEYWORD2
 eulerAnglesAvailable	KEYWORD2
