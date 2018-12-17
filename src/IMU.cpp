@@ -42,6 +42,8 @@
 #define BNNO055_UNIT_SEL_REG           0x3b
 #define BNNO055_OPR_MODE_REG           0x3d
 #define BNNO055_SYS_TRIGGER_REG        0x3f
+#define BNNO055_AXIS_MAP_CONFIG_REG    0x41
+#define BNNO055_AXIS_MAP_SIGN_REG      0x42
 
 IMUClass::IMUClass(TwoWire& wire, int irqPin) : 
   _wire(&wire),
@@ -80,6 +82,12 @@ int IMUClass::begin()
 
   // set acceleration unit to mG's
   writeRegister(BNNO055_UNIT_SEL_REG, 0x01);
+
+  // set X = X, Y = Y, Z = Z
+  writeRegister(BNNO055_AXIS_MAP_CONFIG_REG, 0x24);
+
+  // invert X and Y axis signs
+  writeRegister(BNNO055_AXIS_MAP_SIGN_REG, 0x06);
 
   // enter NDOF mode
   writeRegister(BNNO055_OPR_MODE_REG, 0x0c);
