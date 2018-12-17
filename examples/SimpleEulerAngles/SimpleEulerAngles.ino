@@ -29,19 +29,19 @@ void setup() {
   Serial.println(" Hz");
   Serial.println();
   Serial.println("Euler Angles in degrees");
-  Serial.println("X\tY\tZ");
+  Serial.println("Heading\tRoll\tPitch");
 }
 
 void loop() {
-  float x, y, z;
+  float heading, roll, pitch;
 
   if (IMU.eulerAnglesAvailable()) {
-    IMU.readEulerAngles(x, y, z);
+    IMU.readEulerAngles(heading, roll, pitch);
 
-    Serial.print(x);
+    Serial.print(heading);
     Serial.print('\t');
-    Serial.print(y);
+    Serial.print(roll);
     Serial.print('\t');
-    Serial.println(z);
+    Serial.println(pitch);
   }
 }

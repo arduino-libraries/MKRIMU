@@ -223,24 +223,24 @@ float IMUClass::magneticFieldSampleRate()
   return MAGNETOMETER_SAMPLE_RATE; // fixed in fusion mode
 }
 
-int IMUClass::readEulerAngles(float& x, float& y, float& z)
+int IMUClass::readEulerAngles(float& heading, float& roll, float& pitch)
 {
   int16_t data[3];
 
   _lastEulerAnglesReadMillis = millis();
 
   if (!readRegisters(BNNO055_EUL_DATA_X_LSB_REG, (uint8_t*)data, sizeof(data))) {
-    x = NAN;
-    y = NAN;
-    z = NAN;
+    heading = NAN;
+    roll = NAN;
+    pitch = NAN;
 
     return 0;
   }
 
   // convert degrees
-  x = data[0] / 16.0;
-  y = data[1] / 16.0;
-  z = data[2] / 16.0;
+  heading = data[0] / 16.0;
+  roll = data[1] / 16.0;
+  pitch = data[2] / 16.0;
 
   return 1;
 }

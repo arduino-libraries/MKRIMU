@@ -49,7 +49,7 @@ public:
   virtual float magneticFieldSampleRate(); // Sampling rate of the sensor.
 
   // Euler angles
-  int readEulerAngles(float& x, float& y, float& z); // Results are in degrees
+  int readEulerAngles(float& heading, float& roll, float& pitch); // Results are in degrees
   int eulerAnglesAvailable(); // Number of samples in the FIFO.
   float eulerAnglesSampleRate(); // Sampling rate of the sensor.
 
