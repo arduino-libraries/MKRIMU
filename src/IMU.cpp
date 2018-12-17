@@ -39,7 +39,7 @@
 #define BNNO055_PAGE_ID_REG            0x07
 #define BNNO055_TEMP_REG               0x34
 #define BNNO055_SYS_STATUS_REG         0x39
-#define NBBO055_UNIT_SEL_REG           0x3b
+#define BNNO055_UNIT_SEL_REG           0x3b
 #define BNNO055_OPR_MODE_REG           0x3d
 #define BNNO055_SYS_TRIGGER_REG        0x3f
 
@@ -79,7 +79,7 @@ int IMUClass::begin()
   writeRegister(BNNO055_SYS_TRIGGER_REG, 0x80);
 
   // set acceleration unit to mG's
-  writeRegister(NBBO055_UNIT_SEL_REG, 0x01);
+  writeRegister(BNNO055_UNIT_SEL_REG, 0x01);
 
   // enter NDOF mode
   writeRegister(BNNO055_OPR_MODE_REG, 0x0c);
