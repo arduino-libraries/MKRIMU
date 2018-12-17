@@ -276,7 +276,7 @@ int IMUClass::readRegister(uint8_t address)
 {
   _wire->beginTransmission(BNNO055_ADDRESS);
   _wire->write(address);
-  if (_wire->endTransmission() != 0) {
+  if (_wire->endTransmission(false) != 0) {
     return -1;
   }
 
@@ -291,7 +291,7 @@ int IMUClass::readRegisters(uint8_t address, uint8_t* data, size_t length)
 {
   _wire->beginTransmission(BNNO055_ADDRESS);
   _wire->write(address);
-  if (_wire->endTransmission() != 0) {
+  if (_wire->endTransmission(false) != 0) {
     return -1;
   }
 
