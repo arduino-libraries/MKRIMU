@@ -80,8 +80,8 @@ int IMUClass::begin()
   // enable external clock
   writeRegister(BNNO055_SYS_TRIGGER_REG, 0x80);
 
-  // set acceleration unit to mG's
-  writeRegister(BNNO055_UNIT_SEL_REG, 0x01);
+  // set acceleration unit to mG's, and fusion data output mode to Android
+  writeRegister(BNNO055_UNIT_SEL_REG, 0x81);
 
   // set X = X, Y = Y, Z = Z
   writeRegister(BNNO055_AXIS_MAP_CONFIG_REG, 0x24);
