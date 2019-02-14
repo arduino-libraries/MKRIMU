@@ -33,6 +33,11 @@ public:
   int begin();
   void end();
 
+  //interrupt management
+  void attachInterrupt(voidFuncPtr callback); // Enable interrupt.
+  void detachInterrupt();
+  static void HighMotionAcceleration();
+
   // Accelerometer
   virtual int readAcceleration(float& x, float& y, float& z); // Results are in G (earth gravity).
   virtual int accelerationAvailable(); // Number of samples in the FIFO.

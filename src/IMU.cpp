@@ -44,6 +44,11 @@
 #define BNNO055_SYS_TRIGGER_REG        0x3f
 #define BNNO055_AXIS_MAP_CONFIG_REG    0x41
 #define BNNO055_AXIS_MAP_SIGN_REG      0x42
+#define BNNO055_INT_EN_REG             0x10
+#define BNNO055_ACC_AM_THRES_REG       0x11
+#define BNNO055_ACC_INT_Settings_REG   0x12
+#define BNNO055_INT_STA_REG            0x37
+#define BNNO055_INT_MSK_REG            0x0f
 
 IMUClass::IMUClass(TwoWire& wire, int irqPin) : 
   _wire(&wire),
@@ -107,6 +112,58 @@ void IMUClass::end()
   writeRegister(BNNO055_OPR_MODE_REG, 0x00);
 
   _wire->end();
+}
+
+voidFuncPtr cb;
+IMUClass * imurq;
+void IMUClass::HighMotionAcceleration()
+{
+  // check if any motion interrupt was triggered;
+  if (imurq->readRegister(BNNO055_INT_STA_REG) == 0x40){
+    cb();
+  }
+
+  // clear the interupt status bit
+  imurq->writeRegister(BNNO055_SYS_TRIGGER_REG, 0x40);
+}
+
+void IMUClass::attachInterrupt(voidFuncPtr callback)
+{
+  cb = callback;
+  imurq = this;
+
+  // attach interrupt to pin 0
+  ::attachInterrupt(0, HighMotionAcceleration, RISING);
+
+  // try to set config mode
+  writeRegister(BNNO055_OPR_MODE_REG, 0x00);
+
+  // select page id 1
+  writeRegister(BNNO055_PAGE_ID_REG, 0x01);
+
+  // Enable any motion interrupt
+  writeRegister(BNNO055_INT_EN_REG, 0x40);
+
+  // set the mask interrupt register for any motion interrupt
+  writeRegister(BNNO055_INT_MSK_REG, 0x40);
+
+  // set the mask interrupt register for all axis
+  writeRegister(BNNO055_ACC_INT_Settings_REG, 0xfc);
+
+  // set any motion threshold value for motion detection 1 LSB = 3.91mg, 0x80 = 500 mg
+  writeRegister(BNNO055_ACC_AM_THRES_REG, 0x80);
+
+  // select page id 0
+  writeRegister(BNNO055_PAGE_ID_REG, 0x00);
+
+  // try to exit from config mode
+  writeRegister(BNNO055_OPR_MODE_REG, 0x01);
+}
+
+void IMUClass::detachInterrupt() {
+
+  ::detachInterrupt(0);
+
 }
 
 int IMUClass::readAcceleration(float& x, float& y, float& z)
