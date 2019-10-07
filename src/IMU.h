@@ -53,7 +53,7 @@ public:
   int eulerAnglesAvailable(); // Number of samples in the FIFO.
   float eulerAnglesSampleRate(); // Sampling rate of the sensor.
 
-  virtual float readTemperature(); // Result are in degrees Celcius
+  virtual float readTemperature(); // Result are in degrees Celsius
 
 private:
   int readRegister(uint8_t address);
