@@ -57,6 +57,7 @@
 #define BNO055_AXIS_MAP_SIGN_REG      0x42
 #define BNO055_ACC_OFFSET_X_LSB_REG   0x55
 
+
 IMUClass::IMUClass(TwoWire& wire, int irqPin) : 
   _wire(&wire),
   _irqPin(irqPin)
