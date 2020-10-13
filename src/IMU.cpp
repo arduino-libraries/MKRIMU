@@ -29,21 +29,33 @@
 #define EULER_ANGLES_SAMPLE_RATE      100
 #define EULER_ANGLES_PERIOD_MS        (1000 / EULER_ANGLES_SAMPLE_RATE)
 
-#define BNNO055_ADDRESS                0x28
+#define BNO055_QUATERNION_LSB         16384.0 // 2^14
+#define BNO055_ACCEL_LSB              1000.0 // mg to G
+#define BNO055_GYRO_LSB               16.0
+#define BNO055_ACCEL_LSB              16.0
 
-#define BNNO055_CHIP_ID_REG            0x00
-#define BNNO055_ACC_DATA_X_LSB_REG     0x08
-#define BNNO055_MAG_DATA_X_LSB_REG     0x0e
-#define BNNO055_GYR_DATA_X_LSB_REG     0x14
-#define BNNO055_EUL_DATA_X_LSB_REG     0x1a
-#define BNNO055_PAGE_ID_REG            0x07
-#define BNNO055_TEMP_REG               0x34
-#define BNNO055_SYS_STATUS_REG         0x39
-#define BNNO055_UNIT_SEL_REG           0x3b
-#define BNNO055_OPR_MODE_REG           0x3d
-#define BNNO055_SYS_TRIGGER_REG        0x3f
-#define BNNO055_AXIS_MAP_CONFIG_REG    0x41
-#define BNNO055_AXIS_MAP_SIGN_REG      0x42
+#define BNO055_ADDRESS                0x28
+
+#define BNO055_CHIP_ID_REG            0x00
+#define BNO055_PAGE_ID_REG            0x07
+#define BNO055_ACC_DATA_X_LSB_REG     0x08
+#define BNO055_MAG_DATA_X_LSB_REG     0x0e
+#define BNO055_GYR_DATA_X_LSB_REG     0x14
+#define BNO055_EUL_DATA_X_LSB_REG     0x1a
+#define BNO055_QUA_DATA_W_LSB_REG     0x20
+#define BNO055_LIA_DATA_X_LSB_REG     0x28
+#define BNO055_GRV_DATA_X_LSB_REG     0x2e
+#define BNO055_TEMP_REG               0x34
+#define BNO055_CALIB_STAT_REG         0x35
+#define BNO055_ST_RESULT_REG          0x36
+#define BNO055_SYS_STATUS_REG         0x39
+#define BNO055_UNIT_SEL_REG           0x3b
+#define BNO055_OPR_MODE_REG           0x3d
+#define BNO055_PWR_MODE_REG           0x3e
+#define BNO055_SYS_TRIGGER_REG        0x3f
+#define BNO055_AXIS_MAP_CONFIG_REG    0x41
+#define BNO055_AXIS_MAP_SIGN_REG      0x42
+#define BNO055_ACC_OFFSET_X_LSB_REG   0x55
 
 IMUClass::IMUClass(TwoWire& wire, int irqPin) : 
   _wire(&wire),
