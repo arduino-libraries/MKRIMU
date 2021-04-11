@@ -80,7 +80,7 @@ int IMUClass::begin()
   // enable external clock
   writeRegister(BNNO055_SYS_TRIGGER_REG, 0x80);
 
-  // set acceleration unit to mG's, and fusion data output mode to Android
+  // set acceleration unit to mg's, and fusion data output mode to Android
   writeRegister(BNNO055_UNIT_SEL_REG, 0x81);
 
   // set X = X, Y = Y, Z = Z
@@ -123,7 +123,7 @@ int IMUClass::readAcceleration(float& x, float& y, float& z)
     return 0;
   }
 
-  // convert mg to G's
+  // convert mg to g's
   x = data[0] / 1000.0;
   y = data[1] / 1000.0;
   z = data[2] / 1000.0;

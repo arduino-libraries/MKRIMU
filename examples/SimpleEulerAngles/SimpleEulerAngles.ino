@@ -1,8 +1,8 @@
 /*
   MKR IMU Shield - Simple Euler Angles
 
-  This example reads the euler angle values from the IMU
-  on the MKR IMU shield and continuosly prints them to the 
+  This example reads the Euler angle values from the IMU
+  on the MKR IMU Shield and continuously prints them to the 
   Serial Monitor.
 
   The circuit:

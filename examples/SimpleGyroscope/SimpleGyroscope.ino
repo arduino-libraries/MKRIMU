@@ -2,7 +2,7 @@
   MKR IMU Shield - Simple Gyroscope
 
   This example reads the gyroscope values from the IMU
-  on the MKR IMU shield and continuosly prints them to the 
+  on the MKR IMU Shield and continuously prints them to the 
   Serial Monitor.
 
   The circuit:
@@ -24,7 +24,7 @@ void setup() {
     while (1);
   }
 
-  Serial.print("Gyroscop sample rate = ");
+  Serial.print("Gyroscope sample rate = ");
   Serial.print(IMU.gyroscopeSampleRate());
   Serial.println(" Hz");
   Serial.println();
