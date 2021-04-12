@@ -2,7 +2,7 @@
   MKR IMU Shield - Simple Accelerometer
 
   This example reads the acceleration values from the IMU
-  on the MKR IMU shield and continuosly prints them to the 
+  on the MKR IMU Shield and continuously prints them to the 
   Serial Monitor.
 
   The circuit:
@@ -28,7 +28,7 @@ void setup() {
   Serial.print(IMU.accelerationSampleRate());
   Serial.println(" Hz");
   Serial.println();
-  Serial.println("Acceleration in G's");
+  Serial.println("Acceleration in g's");
   Serial.println("X\tY\tZ");
 }
 
