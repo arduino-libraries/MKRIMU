@@ -72,7 +72,7 @@ int IMUClass::begin()
 
   // enter config mode
   writeRegister(BNNO055_OPR_MODE_REG, 0x00);
-  delay(19);
+  delay(7);
 
   // select page id 0
   writeRegister(BNNO055_PAGE_ID_REG, 0x00);
@@ -91,7 +91,7 @@ int IMUClass::begin()
 
   // enter NDOF mode
   writeRegister(BNNO055_OPR_MODE_REG, 0x0c);
-  delay(7);
+  delay(19);
 
   // wait for sensor fusion algorithm to be running
   do {
@@ -314,8 +314,27 @@ int IMUClass::writeRegister(uint8_t address, uint8_t value)
   if (_wire->endTransmission() != 0) {
     return 0;
   }
-
   return 1;
 }
 
 IMUClass IMU(Wire, 0);
+int IMUClass::setInterrupt()
+{
+  writeRegister(BNNO055_PAGE_ID_REG, 0x00); // enter config mode
+  delay(7);
+  writeRegister(BNNO055_OPR_MODE_REG, 0x01); // be secure act on page 1
+  writeRegister(0x10,64); // INT_EN
+  writeRegister(0x0f,64); // INT_MASK Acceleration AnyMotion
+  writeRegister(0x12,0x1C); // ACC_INT_SETTINGS AnyMotion for X, Y, Z
+  writeRegister(BNNO055_PAGE_ID_REG, 0x00); // return to Page 0
+  writeRegister(BNNO055_OPR_MODE_REG, 0x0c); // to call NDOF mode
+  delay(19);
+  return 1;
+}
+
+int IMUClass::resetInterrupt()
+{
+  writeRegister(BNNO055_PAGE_ID_REG,0); // Page 0
+  writeRegister(BNNO055_SYS_TRIGGER_REG,64) // RST_INT
+  return 1;
+}
