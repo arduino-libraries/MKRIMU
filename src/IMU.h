@@ -54,6 +54,9 @@ public:
   float eulerAnglesSampleRate(); // Sampling rate of the sensor.
 
   virtual float readTemperature(); // Result are in degrees Celsius
+  
+  virtual int setInterrupt(); // set irqPin as interrupr
+  virtual int resetInterrupt(); // after a int routine
 
 private:
   int readRegister(uint8_t address);
