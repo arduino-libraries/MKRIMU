@@ -37,4 +37,5 @@ To do so you have to:
   {
     do ypur routine
     IMU.resetInterrupt(); // to continue getting other interrups
+    intflag = false;
   }
