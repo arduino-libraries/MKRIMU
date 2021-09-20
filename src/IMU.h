@@ -23,7 +23,7 @@
 #include <Arduino.h>
 #include <Wire.h>
 
-#include "IMU.h"
+// #include "IMU.h"
 
 class IMUClass {
 public:
@@ -54,6 +54,9 @@ public:
   float eulerAnglesSampleRate(); // Sampling rate of the sensor.
 
   virtual float readTemperature(); // Result are in degrees Celsius
+
+  virtual int setInterrupt();
+  virtual int resetInterrupt();
 
 private:
   int readRegister(uint8_t address);
