@@ -9,12 +9,13 @@ image:https://github.com/{repository-owner}/{repository-name}/actions/workflows/
 
 Allows you to read the acceleration, gyroscope, magnetic fields and Euler angles from the IMU on your MKR IMU Shield.
 
-You can also set an interrupt on AnyMotion in XYZ dir and react with your routine.
-To do so you have to:
+  You can also set an interrupt on AnyMotion in XYZ dir and react with your routine.
+  To do so your sketch have to:
 
   #include "ArduinoLowPower.h"
   #include "MKRIMU.h"
   #include <SPI.h>
+  const byte interruptPin = 0;
   volatile bool intFlag=false;
 
   in setup:
@@ -33,9 +34,9 @@ To do so you have to:
 
   in loop:
   ...
-  if (intflag) 
+  if (intFlag) 
   {
     do ypur routine
-    IMU.resetInterrupt(); // to continue getting other interrups
-    intflag = false;
+    IMU.resetInterrupt(); // to continue getting other interrupts
+    intFlag = false;
   }
