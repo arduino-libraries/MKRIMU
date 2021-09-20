@@ -32,6 +32,9 @@ eulerAnglesSampleRate	KEYWORD2
 
 readTemperature	KEYWORD2
 
+setInterrupt KEYWORD2
+resetInterrupt KEYWORD2
+
 #######################################
 # Constants
 #######################################
