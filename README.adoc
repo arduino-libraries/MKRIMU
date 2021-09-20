@@ -29,7 +29,7 @@ Allows you to read the acceleration, gyroscope, magnetic fields and Euler angles
 
   void dummy() 
   {
-    intFlag=true;
+    intFlag = true;
   }
 
   in loop:
