@@ -34,7 +34,7 @@ public:
   void end();
 
   // Accelerometer
-  virtual int readAcceleration(float& x, float& y, float& z); // Results are in g (earth gravity).
+  virtual int readAcceleration(float& x, float& y, float& z); // Results are in G (earth gravity).
   virtual int accelerationAvailable(); // Number of samples in the FIFO.
   virtual float accelerationSampleRate(); // Sampling rate of the sensor.
   
@@ -53,12 +53,17 @@ public:
   int eulerAnglesAvailable(); // Number of samples in the FIFO.
   float eulerAnglesSampleRate(); // Sampling rate of the sensor.
 
-  virtual float readTemperature(); // Result are in degrees Celsius
+  // Quaternion
+  int readQuaternion(float& sw, float& sx, float& sy, float& sz); 
+  virtual int quaternionAvailable(); // Number of samples in the FIFO.
+  virtual float quaternionSampleRate(); // Sampling rate of the sensor.
+
+  virtual float readTemperature(); // Result are in degrees Celcius
 
 private:
   int readRegister(uint8_t address);
-  int readRegisters(uint8_t address, uint8_t* data, size_t length);
   int writeRegister(uint8_t address, uint8_t value);
+  int readRegisters(uint8_t address, uint8_t* data, size_t length);
 
 private:
   TwoWire* _wire;
@@ -68,6 +73,8 @@ private:
   unsigned long _lastGyroscopeReadMillis;
   unsigned long _lastMagneticFieldReadMillis;
   unsigned long _lastEulerAnglesReadMillis;
+  unsigned long _lastQuaternionReadMillis;
+  
 };
 
 extern IMUClass IMU;
