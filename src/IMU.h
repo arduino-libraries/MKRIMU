@@ -58,7 +58,7 @@ public:
   virtual int quaternionAvailable(); // Number of samples in the FIFO.
   virtual float quaternionSampleRate(); // Sampling rate of the sensor.
 
-  virtual float readTemperature(); // Result are in degrees Celcius
+  virtual float readTemperature(); // Result are in degrees Celsius
 
 private:
   int readRegister(uint8_t address);
