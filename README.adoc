@@ -7,4 +7,4 @@ image:https://github.com/{repository-owner}/{repository-name}/actions/workflows/
 image:https://github.com/{repository-owner}/{repository-name}/actions/workflows/compile-examples.yml/badge.svg["Compile Examples status", link="https://github.com/{repository-owner}/{repository-name}/actions/workflows/compile-examples.yml"]
 image:https://github.com/{repository-owner}/{repository-name}/actions/workflows/spell-check.yml/badge.svg["Spell Check status", link="https://github.com/{repository-owner}/{repository-name}/actions/workflows/spell-check.yml"]
 
-Allows you to read the acceleration, gyroscope, magnetic fields and Euler angles from the IMU on your MKR IMU Shield.
+Allows you to read the acceleration, gyroscope, magnetic fields, Euler angles and quaternions from the IMU on your MKR IMU Shield.

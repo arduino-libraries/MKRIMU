@@ -28,6 +28,8 @@
 #define MAGNETOMETER_PERIOD_MS        (1000 / MAGNETOMETER_SAMPLE_RATE)
 #define EULER_ANGLES_SAMPLE_RATE      100
 #define EULER_ANGLES_PERIOD_MS        (1000 / EULER_ANGLES_SAMPLE_RATE)
+#define QUATERNION_SAMPLE_RATE        100
+#define QUATERNION_PERIOD_MS        (1000 / QUATERNION_SAMPLE_RATE)
 
 #define BNNO055_ADDRESS                0x28
 
@@ -36,6 +38,7 @@
 #define BNNO055_MAG_DATA_X_LSB_REG     0x0e
 #define BNNO055_GYR_DATA_X_LSB_REG     0x14
 #define BNNO055_EUL_DATA_X_LSB_REG     0x1a
+#define BNNO055_QUAT_DATA_W_LSB_ADDR   0X20
 #define BNNO055_PAGE_ID_REG            0x07
 #define BNNO055_TEMP_REG               0x34
 #define BNNO055_SYS_STATUS_REG         0x39
@@ -44,6 +47,9 @@
 #define BNNO055_SYS_TRIGGER_REG        0x3f
 #define BNNO055_AXIS_MAP_CONFIG_REG    0x41
 #define BNNO055_AXIS_MAP_SIGN_REG      0x42
+
+
+
 
 IMUClass::IMUClass(TwoWire& wire, int irqPin) : 
   _wire(&wire),
@@ -61,6 +67,7 @@ int IMUClass::begin()
   _lastGyroscopeReadMillis     = 0;
   _lastMagneticFieldReadMillis = 0;
   _lastEulerAnglesReadMillis   = 0;
+  _lastQuaternionReadMillis   = 0;
 
   _wire->begin();
 
@@ -80,7 +87,7 @@ int IMUClass::begin()
   // enable external clock
   writeRegister(BNNO055_SYS_TRIGGER_REG, 0x80);
 
-  // set acceleration unit to mg's, and fusion data output mode to Android
+  // set acceleration unit to mG's, and fusion data output mode to Android
   writeRegister(BNNO055_UNIT_SEL_REG, 0x81);
 
   // set X = X, Y = Y, Z = Z
@@ -123,7 +130,7 @@ int IMUClass::readAcceleration(float& x, float& y, float& z)
     return 0;
   }
 
-  // convert mg to g's
+  // convert mg to G's
   x = data[0] / 1000.0;
   y = data[1] / 1000.0;
   z = data[2] / 1000.0;
@@ -259,6 +266,54 @@ int IMUClass::eulerAnglesAvailable()
 float IMUClass::eulerAnglesSampleRate()
 {
   return EULER_ANGLES_SAMPLE_RATE; // fixed in fusion mode
+}
+
+
+int IMUClass::readQuaternion(float& sw, float& sx, float& sy, float& sz)
+{
+  _lastQuaternionReadMillis = millis();
+
+  uint8_t buffer[8];
+  memset(buffer, 0, 8);
+
+  int16_t x, y, z, w;
+  x = y = z = w = 0;
+
+  if (!readRegisters(BNNO055_QUAT_DATA_W_LSB_ADDR, buffer, 8))
+  {
+    sw = NAN; sx = NAN; sy = NAN; sz = NAN;
+    return 0;
+  }
+
+  w = (((uint16_t)buffer[1]) << 8) | ((uint16_t)buffer[0]);
+  x = (((uint16_t)buffer[3]) << 8) | ((uint16_t)buffer[2]);
+  y = (((uint16_t)buffer[5]) << 8) | ((uint16_t)buffer[4]);
+  z = (((uint16_t)buffer[7]) << 8) | ((uint16_t)buffer[6]);
+
+  const double scale = (1.0 / (1 << 14));
+  sw = float(scale * w);
+  sx = float(scale * x);
+  sy = float(scale * y);
+  sz = float(scale * z);
+
+  return 1;
+}
+
+
+int IMUClass::quaternionAvailable()
+{
+  unsigned long now = millis();
+
+  if (abs((long)now - (long)_lastQuaternionReadMillis) < QUATERNION_PERIOD_MS) {
+    return 0;
+  }
+
+  return 1;
+}
+
+float IMUClass::quaternionSampleRate()
+{
+  return QUATERNION_SAMPLE_RATE; // fixed in fusion mode
 }
 
 float IMUClass::readTemperature()
